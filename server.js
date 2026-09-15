@@ -42,7 +42,7 @@ const ADMIN_USER        = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASSWORD    = process.env.ADMIN_PASSWORD || '';
 
 const SITE_URL   = `https://${CANONICAL_HOST}`;
-const PUBLIC_DIR = path.join(__dirname, 'public');
+const PUBLIC_DIR = __dirname;  // Serve static files from root directory
 const ADMIN_DIR  = path.join(__dirname, 'admin');
 const STARTED_AT = Date.now();
 
@@ -371,6 +371,19 @@ app.post('/admin/api/unblock', adminLimiter, adminAuth, (req, res) => {
   strikeMap.delete(ip);
   console.log(`[ADMIN] IP bloku ləğv edildi: ${ip}`);
   res.json({ success: true, ip });
+});
+
+/* ============================================================================
+   QAT 10.5 — Vercel Speed Insights  
+   Serve Speed Insights script from node_modules for local development.
+   On Vercel production, /_vercel/* routes are automatically handled.
+============================================================================ */
+app.get('/_vercel/speed-insights/script.js', (req, res) => {
+  const scriptPath = path.join(__dirname, 'node_modules', '@vercel', 'speed-insights', 'dist', 'index.mjs');
+  res.type('application/javascript');
+  res.sendFile(scriptPath, (err) => {
+    if (err) res.status(404).send('// Speed Insights not available in development');
+  });
 });
 
 /* ============================================================================
