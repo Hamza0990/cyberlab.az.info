@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+<html lang="az">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title data-i18n="pageTitle">CyberLab — Red Team &amp; Blue Team Bələdçisi | cyberlab.az.info</title>
+<meta content="OSINT, DDoS, RAT və fişinq hücum vektorlarını, Red Team/Blue Team alətlərini və qanuni kibertəhlükəsizlik təlim mühitlərini konseptual səviyyədə izah edən təhsil mənbəyi." name="description"/>
+<meta content="#0A0E13" name="theme-color"/>
+<link href="https://cyberlab.az.info" rel="canonical"/>
+<meta content="CyberLab" property="og:site_name"/>
+<meta content="CyberLab — Red Team &amp; Blue Team Bələdçisi" property="og:title"/>
+<meta content="Hücum vektorlarını, Red/Blue Team alətlərini və qanuni test mühitlərini öyrən." property="og:description"/>
+<meta content="https://cyberlab.az.info" property="og:url"/>
+<meta content="website" property="og:type"/>
+<link href="favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="favicon.svg" rel="apple-touch-icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3+/9htdX8mnB+Ig==" referrerpolicy="no-referrer" rel="stylesheet"/>
+<meta content="index, follow, max-image-preview:large, max-snippet:-1" name="robots"/>
+<meta content="CyberLab" name="author"/>
+<meta content="kibertəhlükəsizlik, siber güvenlik, cybersecurity, OSINT, DDoS, RAT, fişinq, phishing, Red Team, Blue Team, pentest, hacker, etik haker, SOC, SIEM, WAF" name="keywords"/>
+<link href="https://cyberlab.az.info" hreflang="az" rel="alternate"/>
+<link href="https://cyberlab.az.info" hreflang="en" rel="alternate"/>
+<link href="https://cyberlab.az.info" hreflang="ru" rel="alternate"/>
+<link href="https://cyberlab.az.info" hreflang="tr" rel="alternate"/>
+<link href="https://cyberlab.az.info" hreflang="x-default" rel="alternate"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="CyberLab — Red Team &amp; Blue Team Bələdçisi" name="twitter:title"/>
+<meta content="Hücum vektorlarını, Red/Blue Team alətlərini və qanuni test mühitlərini öyrən." name="twitter:description"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "CyberLab",
+  "alternateName": "CyberLab — Red Team & Blue Team Bələdçisi",
+  "url": "https://cyberlab.az.info",
+  "description": "OSINT, DDoS, RAT və fişinq hücum vektorlarını, Red Team/Blue Team alətlərini və qanuni kibertəhlükəsizlik təlim mühitlərini izah edən təhsil mənbəyi.",
+  "inLanguage": ["az", "en", "ru", "tr"],
+  "publisher": {
+    "@type": "Organization",
+    "name": "CyberLab",
+    "url": "https://cyberlab.az.info"
+  }
+}
+</script>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<canvas id="netCanvas"></canvas>
+<div class="scan-overlay"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<!-- LOADER -->
+<div id="loader">
+<div class="loader-inner">
+<span class="loader-bracket">[</span>
+<span class="loader-text" data-i18n="k002" id="loaderText">SYSTEM INIT...</span>
+<span class="loader-bracket">]</span>
+</div>
+<div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+<!-- NAV -->
+<header class="nav" id="mainNav">
+<div class="nav-inner">
+<a class="brand" href="#top">
+<span class="brand-mark">◈</span>
+<span class="brand-text">CYBER<span class="accent-split">LAB</span></span>
+</a>
+<nav class="nav-links">
+<div class="dropdown">
+<button class="nav-link dropdown-trigger" data-i18n="k003">Təhdidlər <i class="chev">⌄</i></button>
+<div class="dropdown-menu">
+<a data-i18n="k004" href="#osint">OSINT</a>
+<a data-i18n="k005" href="#ddos">DDoS</a>
+<a data-i18n="k006" href="#rat">RAT</a>
+<a data-i18n="k007" href="#phishing">Fişinq &amp; ZIP</a>
+</div>
+</div>
+<div class="dropdown">
+<button class="nav-link dropdown-trigger" data-i18n="k008">Komandalar <i class="chev">⌄</i></button>
+<div class="dropdown-menu">
+<a data-i18n="k009" href="#teamintro">Red vs Blue Team</a>
+<a data-i18n="k010" href="#killchain">Hücum zənciri</a>
+<a data-i18n="k011" href="#redteam">Red Team alətləri</a>
+<a data-i18n="k012" href="#blueteam">Blue Team alətləri</a>
+<a data-i18n="k013" href="#hats">Haker papaq tipləri</a>
+</div>
+</div>
+<div class="dropdown">
+<button class="nav-link dropdown-trigger" data-i18n="k014">Öyrən <i class="chev">⌄</i></button>
+<div class="dropdown-menu">
+<a data-i18n="k015" href="#cases">Tarixi hadisələr</a>
+<a data-i18n="k016" href="#labs">Qanuni test mühitləri</a>
+<a data-i18n="k017" href="#faq">FAQ</a>
+</div>
+</div>
+<a class="nav-link" data-i18n="k018" href="#ethics">Etika &amp; Qanun</a>
+</nav>
+<div class="nav-right">
+<div class="lang-switch" id="langSwitch">
+<button aria-expanded="false" aria-haspopup="true" aria-label="Dil / Language" class="lang-trigger" id="langTrigger">
+<span class="lang-flag" id="langFlagCurrent"><svg viewBox="0 0 24 16" width="22" height="15"><rect width="24" height="16" fill="#00AFCA"></rect><rect y="5.33" width="24" height="5.34" fill="#ED2939"></rect><rect y="10.67" width="24" height="5.33" fill="#3F9C35"></rect><circle cx="10.4" cy="8" r="3.1" fill="#fff"></circle><circle cx="11.5" cy="8" r="2.5" fill="#ED2939"></circle><path d="M14.6 6.1l.45 1.25 1.25.45-1.25.45-.45 1.25-.45-1.25-1.25-.45 1.25-.45z" fill="#fff"></path></svg></span>
+<span class="lang-code" id="langCodeCurrent">AZ</span>
+<i class="lang-chev">⌄</i>
+</button>
+<div class="lang-menu" id="langMenu" role="menu">
+<button class="lang-option active" data-lang="az" role="menuitem">
+<span class="lang-flag"><svg viewBox="0 0 24 16" width="22" height="15"><rect width="24" height="16" fill="#00AFCA"></rect><rect y="5.33" width="24" height="5.34" fill="#ED2939"></rect><rect y="10.67" width="24" height="5.33" fill="#3F9C35"></rect><circle cx="10.4" cy="8" r="3.1" fill="#fff"></circle><circle cx="11.5" cy="8" r="2.5" fill="#ED2939"></circle><path d="M14.6 6.1l.45 1.25 1.25.45-1.25.45-.45 1.25-.45-1.25-1.25-.45 1.25-.45z" fill="#fff"></path></svg></span>
+<span class="lang-name">Azərbaycan</span><i class="lang-check">✓</i>
+</button>
+<button class="lang-option" data-lang="en" role="menuitem">
+<span class="lang-flag"><svg viewBox="0 0 24 16" width="22" height="15"><rect width="24" height="16" fill="#012169"></rect><path d="M0 0l24 16M24 0L0 16" stroke="#fff" stroke-width="3.2"></path><path d="M0 0l24 16M24 0L0 16" stroke="#C8102E" stroke-width="1.9"></path><path d="M12 0v16M0 8h24" stroke="#fff" stroke-width="5.3"></path><path d="M12 0v16M0 8h24" stroke="#C8102E" stroke-width="3.2"></path></svg></span>
+<span class="lang-name">English</span><i class="lang-check">✓</i>
+</button>
+<button class="lang-option" data-lang="ru" role="menuitem">
+<span class="lang-flag"><svg viewBox="0 0 24 16" width="22" height="15"><rect width="24" height="5.33" fill="#fff"></rect><rect y="5.33" width="24" height="5.34" fill="#0039A6"></rect><rect y="10.67" width="24" height="5.33" fill="#D52B1E"></rect></svg></span>
+<span class="lang-name">Русский</span><i class="lang-check">✓</i>
+</button>
+<button class="lang-option" data-lang="tr" role="menuitem">
+<span class="lang-flag"><svg viewBox="0 0 24 16" width="22" height="15"><rect width="24" height="16" fill="#E30A17"></rect><circle cx="9" cy="8" r="3.6" fill="#fff"></circle><circle cx="10.3" cy="8" r="2.9" fill="#E30A17"></circle><path d="M13.9 5.9l.5 1.45 1.5.5-1.5.5-.5 1.45-.5-1.45-1.5-.5 1.5-.5z" fill="#fff"></path></svg></span>
+<span class="lang-name">Türkçe</span><i class="lang-check">✓</i>
+</button>
+</div>
+</div>
+<button aria-label="Tema dəyiş" class="theme-toggle" id="themeToggle">
+<span class="toggle-track">
+<span class="toggle-thumb"></span>
+<span class="toggle-icon sun">☀</span>
+<span class="toggle-icon moon">☾</span>
+</span>
+</button>
+<button aria-label="Menyu" class="burger" id="burger">
+<span></span><span></span><span></span>
+</button>
+</div>
+</div>
+<div class="mobile-menu" id="mobileMenu">
+<a data-i18n="k019" href="#osint">OSINT</a>
+<a data-i18n="k020" href="#ddos">DDoS</a>
+<a data-i18n="k021" href="#rat">RAT</a>
+<a data-i18n="k022" href="#phishing">Fişinq &amp; ZIP</a>
+<a data-i18n="k023" href="#teamintro">Red vs Blue Team</a>
+<a data-i18n="k024" href="#killchain">Hücum zənciri</a>
+<a data-i18n="k025" href="#redteam">Red Team</a>
+<a data-i18n="k026" href="#blueteam">Blue Team</a>
+<a data-i18n="k027" href="#hats">Haker papaqları</a>
+<a data-i18n="k028" href="#cases">Tarixi hadisələr</a>
+<a data-i18n="k029" href="#labs">Test mühitləri</a>
+<a data-i18n="k030" href="#faq">FAQ</a>
+<a data-i18n="k031" href="#ethics">Etika</a>
+</div>
+</header>
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+<div class="hero-split">
+<div class="hero-side hero-red">
+<span class="hero-eyebrow" data-i18n="k032">01 // OFFENSE</span>
+<span class="hero-side-title">RED TEAM</span>
+<span class="hero-side-desc" data-i18n="k033">Təşkilatın icazəsi ilə hücumçu kimi düşünüb zəiflikləri əvvəlcədən tapan komanda</span>
+</div>
+<div class="hero-seam">
+<span class="seam-glow"></span>
+</div>
+<div class="hero-side hero-blue">
+<span class="hero-eyebrow" data-i18n="k034">02 // DEFENSE</span>
+<span class="hero-side-title">BLUE TEAM</span>
+<span class="hero-side-desc" data-i18n="k035">Sistemi 7/24 izləyib hücumu aşkarlayan və dayandıran müdafiə komandası</span>
+</div>
+</div>
+<div class="hero-content">
+<p class="hero-kicker" data-i18n="k036">KİBERTƏHLÜKƏSİZLİK ƏMƏLİYYAT MƏRKƏZİ</p>
+<h1 class="hero-title" data-i18n="k037" data-text="Hücum məntiqini bil. Müdafiəni qur." id="glitchTitle">Hücum məntiqini bil. Müdafiəni qur.</h1>
+<p class="hero-desc" data-i18n="k038">
+        OSINT-dən DDoS-a, RAT-dan fişinqə qədər — hücum vektorlarının <em>necə</em> və <em>niyə</em> işlədiyini,
+        real dünya nümunələrini, qanuni sınaq mühitlərini və hər iki tərəfin (Red Team / Blue Team) alətlərini
+        konseptual səviyyədə anla.
+      </p>
+<div class="hero-cta">
+<a class="btn btn-primary magnetic" data-i18n="k039" href="#osint"><span>Təhdidləri araşdır</span><i>→</i></a>
+<a class="btn btn-ghost magnetic" data-i18n="k040" href="#killchain"><span>Hücum zəncirinə bax</span></a>
+</div>
+<div class="hero-stats">
+<div class="stat"><span class="stat-num" data-count="4">0</span><span class="stat-label" data-i18n="k041">Hücum vektoru</span></div>
+<div class="stat"><span class="stat-num" data-count="26">0</span><span class="stat-label" data-i18n="k042">Alət icmalı</span></div>
+<div class="stat"><span class="stat-num" data-count="6">0</span><span class="stat-label" data-i18n="k043">Haker "hat" tipi</span></div>
+<div class="stat"><span class="stat-num" data-count="8">0</span><span class="stat-label" data-i18n="k044">Qanuni test mühiti</span></div>
+<div class="stat"><span class="stat-num" data-count="2">0</span><span class="stat-label" data-i18n="k045">Komanda tərəfi</span></div>
+</div>
+</div>
+<div class="scroll-cue"><span></span>SCROLL</div>
+</section>
+<!-- INTRO STRIP -->
+<section class="ticker">
+<div class="ticker-track">
+<span data-i18n="k046">RECON</span><span data-i18n="k047">WEAPONIZE</span><span data-i18n="k048">DELIVER</span><span data-i18n="k049">EXPLOIT</span><span data-i18n="k050">INSTALL</span><span data-i18n="k051">C2</span><span data-i18n="k052">ACTIONS</span>
+<span data-i18n="k053">RECON</span><span data-i18n="k054">WEAPONIZE</span><span data-i18n="k055">DELIVER</span><span data-i18n="k056">EXPLOIT</span><span data-i18n="k057">INSTALL</span><span data-i18n="k058">C2</span><span data-i18n="k059">ACTIONS</span>
+</div>
+</section>
+<!-- TEAM INTRO -->
+<section class="team-intro" id="teamintro">
+<div class="ti-card ti-red reveal">
+<div class="ti-icon">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<circle cx="24" cy="24" opacity=".3" r="20" stroke="var(--red)" stroke-width="2"></circle>
+<path d="M24 8 L24 24 L36 32" fill="none" stroke="var(--red)" stroke-linecap="round" stroke-width="2.5"></path>
+<circle cx="24" cy="24" fill="var(--red)" r="3.5"></circle>
+</svg>
+</div>
+<span class="ti-eyebrow" data-i18n="k060">RED TEAM NƏDİR?</span>
+<h3 data-i18n="k061">Hücum simulyasiyası aparan icazəli komanda</h3>
+<p data-i18n="k062">Red Team — təşkilatın öz razılığı ilə real hücumçu kimi düşünüb hərəkət edən mütəxəssis qrupudur.
+      Məqsəd zərər vermək deyil, zəiflikləri <strong>real hücumçudan əvvəl</strong> tapıb sənədləşdirməkdir.
+      Nəticə hesabatı Blue Team-ə ötürülür ki, müdafiə gücləndirilsin.</p>
+<ul class="ti-list">
+<li data-i18n="k063">Məqsəd: zəifliyi tapmaq və sübut etmək</li>
+<li data-i18n="k064">Metodologiya: kill chain-i təqlid etmək</li>
+<li data-i18n="k065">Nəticə: pentest hesabatı, tövsiyələr</li>
+</ul>
+</div>
+<div class="ti-vs">VS</div>
+<div class="ti-card ti-blue reveal">
+<div class="ti-icon">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 6 L40 12 V24 C40 34 33 41 24 44 C15 41 8 34 8 24 V12 Z" fill="none" stroke="var(--blue)" stroke-width="2"></path>
+<path d="M17 24 L22 29 L32 18" fill="none" stroke="var(--blue)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<span class="ti-eyebrow" data-i18n="k066">BLUE TEAM NƏDİR?</span>
+<h3 data-i18n="k067">Şəbəkəni izləyib hücumu dayandıran müdafiə komandası</h3>
+<p data-i18n="k068">Blue Team — təşkilatın daxili təhlükəsizlik əməliyyat mərkəzidir (SOC). 7/24 log, trafik və
+      sistem davranışını izləyir, anomaliyanı erkən aşkarlayır və hadisəyə cavab planı üzrə hərəkət edir.
+      Red Team-in "hücumundan" öyrənərək müdafiəni davamlı gücləndirir.</p>
+<ul class="ti-list">
+<li data-i18n="k069">Məqsəd: aşkarlamaq, dayandırmaq, bərpa etmək</li>
+<li data-i18n="k070">Metodologiya: NIST CSF funksiyaları</li>
+<li data-i18n="k071">Nəticə: insident hesabatı, gücləndirilmiş müdafiə</li>
+</ul>
+</div>
+</section>
+<section class="section-intro reveal">
+<span class="section-eyebrow" data-i18n="k072">HÜCUM VEKTORLARI</span>
+<h2 class="section-title type-on-scroll" data-i18n="k073">Bir hücum necə başlayır?</h2>
+<p class="section-lead" data-i18n="k074">
+      Hər real kiber-hücum adətən eyni mərhələlərdən keçir — bu ardıcıllıq sənayedə "Cyber Kill Chain" adlanır.
+      Aşağıda dörd klassik texnika (OSINT, DDoS, RAT, fişinq/ZİP) izah olunur: nə üçün istifadə olunur,
+      hansı halda görünür, real dünyada necə nümunələri var və müdafiə tərəfi bunu necə aşkarlayır.
+      Hər bölmənin sonunda <strong>qanuni sınaq üçün istifadə oluna biləcək platformalar</strong> göstərilib.
+    </p>
+</section>
+<!-- KILL CHAIN -->
+<section class="killchain-section" id="killchain">
+<div class="team-head reveal">
+<span class="section-eyebrow" data-i18n="k075">MODEL</span>
+<h2 class="section-title type-on-scroll" data-i18n="k076">Hücum zənciri vs Müdafiə funksiyaları</h2>
+<p class="section-lead" data-i18n="k077">Yuxarı sıra — hücumçunun addımları (Lockheed Martin Cyber Kill Chain). Aşağı sıra — bu addımlara qarşı NIST Cybersecurity Framework-ün müdafiə funksiyaları. Hər addımın üstünə keç.</p>
+</div>
+<div class="killchain reveal">
+<div class="kc-row kc-red">
+<div class="kc-step" data-tip="Hədəf haqqında açıq mənbələrdən məlumat toplanır.">Recon</div>
+<div class="kc-step" data-tip="Toplanan məlumat əsasında zərərli yük (payload) hazırlanır.">Weaponize</div>
+<div class="kc-step" data-tip="Yük e-poçt, link və ya ZIP əlavəsi ilə qurbana çatdırılır.">Deliver</div>
+<div class="kc-step" data-tip="Zəiflikdən istifadə edərək ilkin giriş əldə olunur.">Exploit</div>
+<div class="kc-step" data-tip="RAT/backdoor sistemə quraşdırılıb davamlı giriş yaradılır.">Install</div>
+<div class="kc-step" data-tip="Hücumçu ilə yoluxmuş sistem arasında əlaqə kanalı qurulur.">C2</div>
+<div class="kc-step" data-tip="Son məqsəd icra olunur: məlumat oğurluğu, sabotaj və s.">Actions</div>
+</div>
+<div class="kc-connector"></div>
+<div class="kc-row kc-blue">
+<div class="kc-step" data-tip="Aktivləri və riskləri qabaqcadan xəritələmək.">Identify</div>
+<div class="kc-step" data-tip="Giriş nəzarəti, təlim, yamaqlama ilə səthi azaltmaq.">Protect</div>
+<div class="kc-step" data-tip="SIEM, IDS/IPS və EDR ilə anomaliyanı tapmaq.">Detect</div>
+<div class="kc-step" data-tip="Hadisəyə komanda ilə cavab vermək, təcrid etmək.">Respond</div>
+<div class="kc-step" data-tip="Sistemi bərpa edib gələcək üçün nəticə çıxarmaq.">Recover</div>
+</div>
+</div>
+<div class="killchain-controls">
+<button class="btn-simulate" data-i18n="k078" id="simulateBtn"><span class="play-icon">▶</span><span id="simulateLabel">Hücum ardıcıllığını canlandır</span></button>
+</div>
+</section>
+<!-- OSINT -->
+<section class="threat-block" id="osint">
+<div class="threat-index">01</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 data-i18n="k079">OSINT <span class="threat-sub">Open Source Intelligence</span></h3>
+<span class="tag tag-recon" data-i18n="k080">RECON MƏRHƏLƏSİ</span>
+</div>
+<p data-i18n="k081">
+        OSINT — hədəf haqqında açıq mənbələrdən (sosial media, DNS qeydləri, iş elanları, sızmış məlumat bazaları,
+        şirkət saytları, GitHub repo-ları) qanuni yolla məlumat toplamaqdır. Bu, fərdi hack texnikası deyil — bir
+        kəşfiyyat metodologiyasıdır və həm hücum, həm də müdafiə tərəfi tərəfindən istifadə olunur.
+      </p>
+<div class="why-grid">
+<div class="why-card tilt">
+<h4 data-i18n="k082">Niyə istifadə olunur?</h4>
+<p data-i18n="k083">Hücum tərəfi hədəfin infrastrukturunu, işçilərinin adlarını, istifadə etdiyi proqram versiyalarını
+          öyrənərək sonrakı addımı (fişinq mətni, hədəf seçimi) daha inandırıcı və dəqiq qurur.</p>
+</div>
+<div class="why-card tilt">
+<h4 data-i18n="k084">Hansı hallarda istifadə olunur?</h4>
+<p data-i18n="k085">Penetration test-in ilk fazasında, M&amp;A əməliyyatlarından əvvəl risk qiymətləndirməsində,
+          jurnalistik araşdırmalarda, işçi seçimi zamanı fon yoxlamasında və korporativ təhlükə kəşfiyyatında.</p>
+</div>
+<div class="why-card tilt">
+<h4 data-i18n="k086">Blue Team üçün nə deməkdir?</h4>
+<p data-i18n="k087">Müdafiə tərəfi öz "rəqəmsal izini" (digital footprint) OSINT metodları ilə özü yoxlayır — işçi
+          məlumatlarının açıq şəkildə görünməsini minimuma endirir və sızmış kimlik məlumatlarını izləyir.</p>
+</div>
+</div>
+<div class="scenario-box reveal">
+<div class="scenario-tag">NÜMUNƏ SSENARİ <span data-i18n="k088">(illüstrativ, uydurma şirkət)</span></div>
+<p data-i18n="k089">
+          "Metrix Logistics" adlı uydurma şirkətin pentest komandası əvvəlcə LinkedIn-də işçi adlarını,
+          şirkət saytının "About" səhifəsindəki texnologiya stack elanlarını və keçmiş sızmalarda çıxan
+          korporativ e-poçt formatını (ad.soyad@sirket.com) topladı. Bu məlumat sonradan icazəli fişinq
+          simulyasiyasında istifadə olundu — real hücumçular da məhz bu ardıcıllığı təkrarlayır.
+        </p>
+</div>
+<div class="terminal reveal" data-lines='["$ theHarvester -d metrix-lab.local -b all","[*] Axtarış aparılır: alt-domenlər, e-poçt formatı, IP diapazonu...","[+] 14 alt-domen tapıldı (test.metrix-lab.local, vpn.metrix-lab.local...)","[+] E-poçt format nümunəsi: ad.soyad@metrix-lab.local","[i] Bu izləmə YALNIZ təhsil laboratoriyasında aparılıb."]'></div>
+<div class="tool-chip-row">
+<span class="chip" data-i18n="k090">Shodan</span><span class="chip" data-i18n="k091">Maltego</span><span class="chip" data-i18n="k092">theHarvester</span>
+<span class="chip" data-i18n="k093">Recon-ng</span><span class="chip" data-i18n="k094">SpiderFoot</span><span class="chip" data-i18n="k095">Have I Been Pwned</span>
+</div>
+</div>
+</section>
+<!-- DDOS -->
+<section class="threat-block alt" id="ddos">
+<div class="threat-index">02</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 data-i18n="k096">DDoS <span class="threat-sub">Distributed Denial of Service</span></h3>
+<span class="tag tag-avail" data-i18n="k097">ƏLÇATANLIQ HÜCUMU</span>
+</div>
+<p data-i18n="k098">
+        DDoS hücumu bir servisi çoxlu mənbədən eyni anda göndərilən trafiklə boğaraq real istifadəçilər üçün
+        əlçatmaz etməkdir. Fərqli qatlarda baş verir: <strong>həcmli (volumetric)</strong> — bant genişliyini
+        doldurmaq, <strong>protokol səviyyəli</strong> — server resurslarını (SYN flood kimi) tükətmək, və
+        <strong>tətbiq qatı</strong> — HTTP sorğuları ilə backend-i yormaq.
+      </p>
+<div class="why-grid">
+<div class="why-card tilt">
+<h4 data-i18n="k099">Niyə istifadə olunur?</h4>
+<p data-i18n="k100">Rəqabət zərəri vermək, fidyə tələb etmək, siyasi etiraz (hacktivism) və ya diqqəti yayındıraraq
+          paralel başqa hücumu gizlətmək məqsədilə istifadə olunur.</p>
+</div>
+<div class="why-card tilt">
+<h4 data-i18n="k101">Hansı hallarda test olunur?</h4>
+<p data-i18n="k102">Şirkətlər öz infrastrukturunun yük tutumunu ölçmək üçün icazəli "stress/load test" mühitində
+          nəzarətli trafik generatorlarından (k6, JMeter, Locust) istifadə edir — bu, DDoS deyil, performans testidir.</p>
+</div>
+<div class="why-card tilt">
+<h4 data-i18n="k103">Blue Team necə dayandırır?</h4>
+<p data-i18n="k104">Sürət limitləmə (rate limiting), anycast şəbəkələr, WAF və trafik "scrubbing" xidmətləri
+          (Cloudflare, Akamai) zərərli trafiki normal trafikdən ayırır.</p>
+</div>
+</div>
+<div class="scenario-box reveal">
+<div class="scenario-tag">TARİXİ NÜMUNƏ <span data-i18n="k105">(ictimai məlum hadisə)</span></div>
+<p data-i18n="k106">
+          2016-cı ildə "Mirai" adlı botnet minlərlə qorunmasız IoT cihazını (kamera, router) yoluxduraraq
+          DNS provayderi Dyn-a qarşı nəhəng həcmli DDoS hücumu təşkil etdi və nəticədə Twitter, Netflix kimi
+          bir çox böyük platforma müvəqqəti əlçatmaz oldu. Hadisə göstərdi ki, zəif defolt parollu IoT
+          cihazları böyük miqyaslı hücumlar üçün "silah" ola bilər.
+        </p>
+</div>
+<div class="tool-chip-row">
+<span class="chip" data-i18n="k107">k6 / JMeter (qanuni test)</span><span class="chip" data-i18n="k108">Cloudflare</span><span class="chip" data-i18n="k109">AWS Shield</span>
+<span class="chip" data-i18n="k110">NGINX rate-limit</span><span class="chip" data-i18n="k111">Anycast DNS</span>
+</div>
+</div>
+</section>
+<!-- RAT -->
+<section class="threat-block" id="rat">
+<div class="threat-index">03</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 data-i18n="k112">RAT <span class="threat-sub">Remote Access Trojan</span></h3>
+<span class="tag tag-persist" data-i18n="k113">PERSISTENCE MƏRHƏLƏSİ</span>
+</div>
+<p data-i18n="k114">
+        RAT — qurbanın sistemində gizli şəkildə uzaqdan idarəetmə kanalı yaradan zərərli proqram növüdür.
+        Adətən zərərsiz görünən fayl kimi çatdırılır və işə salındıqdan sonra hücumçuya ekran görüntüsü,
+        fayl sistemi girişi və klaviatura izləmə imkanı verir.
+      </p>
+<div class="why-grid">
+<div class="why-card tilt">
+<h4 data-i18n="k115">Niyə istifadə olunur?</h4>
+<p data-i18n="k116">Hücumçuya birdəfəlik giriş deyil, <em>davamlı</em> giriş verir — bu, məlumat oğurluğu, casusluq
+          və ya şəbəkə daxilində yayılma üçün vaxt qazandırır.</p>
+</div>
+<div class="why-card tilt">
+<h4 data-i18n="k117">Hansı hallarda aşkarlanır?</h4>
+<p data-i18n="k118">Şəbəkə trafikində qeyri-adi "command &amp; control" (C2) əlaqələri, gözlənilməz gedən
+          bağlantılar, gecə saatlarında qeyri-adi fəallıq və prosesin davranış anomaliyaları ilə aşkarlanır.</p>
+</div>
+<div class="why-card tilt">
+<h4 data-i18n="k119">Blue Team necə müdafiə edir?</h4>
+<p data-i18n="k120">EDR (Endpoint Detection &amp; Response), davranış əsaslı antivirus mühərrikləri, şəbəkə
+          seqmentasiyası və "zero trust" prinsipi RAT-ın əlaqə qurma cəhdini erkən mərhələdə kəsir.</p>
+</div>
+</div>
+<div class="scenario-box reveal">
+<div class="scenario-tag">NÜMUNƏ SSENARİ <span data-i18n="k121">(illüstrativ)</span></div>
+<p data-i18n="k122">
+          Bir işçi "hesabat_yenilənib.exe" adlı görünən faylı açdıqdan sonra sistem arxa planda naməlum
+          bir IP ünvanına hər 60 saniyədə "heartbeat" paketi göndərməyə başlayır. SOC komandası SIEM-də bu
+          təkrarlanan, qeyri-adi gedən trafiki görüb endpoint-i şəbəkədən dərhal təcrid edir — bu, RAT-ın
+          C2 mərhələsinin klassik aşkarlanma nümunəsidir.
+        </p>
+</div>
+<div class="terminal reveal" data-lines='["$ sysmon-log --filter network","[!] Proses: hesabat_yenilenib.exe (PID 4521)","[!] Gedən bağlantı: 185.xx.xx.xx:4444 — hər 60s təkrarlanır","[!] Status: NAMƏLUM İMZA — karantinə göndərilir","[✔] Endpoint şəbəkədən təcrid olundu (EDR avtomatik cavabı)"]'></div>
+<div class="tool-chip-row">
+<span class="chip" data-i18n="k123">EDR mühərrikləri</span><span class="chip" data-i18n="k124">Sysmon</span><span class="chip" data-i18n="k125">YARA imzaları</span>
+<span class="chip" data-i18n="k126">Şəbəkə seqmentasiyası</span><span class="chip" data-i18n="k127">Zero Trust</span>
+</div>
+</div>
+</section>
+<!-- PHISHING -->
+<section class="threat-block alt" id="phishing">
+<div class="threat-index">04</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 data-i18n="k128">Fişinq &amp; ZIP çatdırılması <span class="threat-sub">Social Engineering</span></h3>
+<span class="tag tag-deliver" data-i18n="k129">ÇATDIRILMA MƏRHƏLƏSİ</span>
+</div>
+<p data-i18n="k130">
+        Fişinq — texniki zəiflikdən daha çox <strong>insan psixologiyasından</strong> istifadə edən metoddur:
+        təcililik, etibar və ya maraq hissi yaradaraq istifadəçini zərərli linkə klikləməyə və ya arxivləşdirilmiş
+        (ZIP) əlavəni açmağa təşviq edir. ZIP formatı çox vaxt seçilir, çünki e-poçt filtrləri arxiv daxilini
+        birbaşa skan etməkdə xam fayllara nisbətən daha çətinlik çəkə bilir.
+      </p>
+<div class="why-grid">
+<div class="why-card tilt">
+<h4 data-i18n="k131">Niyə effektivdir?</h4>
+<p data-i18n="k132">İnsan diqqətsizliyi ən "yamaqlanmayan" zəiflikdir — texniki nəzarətdən keçsə də, bir klik
+          bütün müdafiə qatlarını keçə bilir.</p>
+</div>
+<div class="why-card tilt">
+<h4 data-i18n="k133">Hansı hallarda istifadə olunur?</h4>
+<p data-i18n="k134">İlkin giriş (initial access) əldə etmək üçün korporativ hücumların böyük əksəriyyətində
+          birinci addım kimi seçilir — saxta fakturalar, "təcili" HR bildirişləri, saxta parol sıfırlama linkləri.</p>
+</div>
+<div class="why-card tilt">
+<h4 data-i18n="k135">Blue Team necə qarşısını alır?</h4>
+<p data-i18n="k136">E-poçt "sandboxing", əlavə skan, DMARC/SPF/DKIM autentifikasiyası və mütəmadi işçi
+          maarifləndirmə təlimləri (məs. GoPhish, KnowBe4 ilə icazəli simulyasiya) riski əhəmiyyətli azaldır.</p>
+</div>
+</div>
+<div class="scenario-box reveal">
+<div class="scenario-tag">NÜMUNƏ SSENARİ <span data-i18n="k137">(illüstrativ)</span></div>
+<p data-i18n="k138">
+          Mühasibatlıq şöbəsinə "Fakturanız gecikib — 24 saat ərzində bax" mövzulu e-poçt gəlir, əlavədə
+          "faktura_2026.zip" faylı var. Şirkətin icazəli fişinq simulyasiya proqramı çərçivəsində göndərilən
+          bu test mesajını neçə işçinin açdığı ölçülür və nəticə əsasında əlavə təlim planlaşdırılır.
+        </p>
+</div>
+<div class="tool-chip-row">
+<span class="chip" data-i18n="k139">DMARC / SPF / DKIM</span><span class="chip" data-i18n="k140">Email sandbox</span>
+<span class="chip" data-i18n="k141">GoPhish (icazəli sim.)</span><span class="chip" data-i18n="k142">Awareness təlimi</span>
+</div>
+</div>
+</section>
+<!-- CASE STUDIES -->
+<section class="cases-section" id="cases">
+<div class="team-head reveal">
+<span class="section-eyebrow" data-i18n="k143">TARİXİ HADİSƏLƗR</span>
+<h2 class="section-title type-on-scroll" data-i18n="k144">İctimai məlum kiber-hadisələr</h2>
+<p class="section-lead" data-i18n="k145">Bu hadisələr geniş yayılmış, ictimaiyyətə açıq faktlardır — məqsəd əməliyyat detalı vermək deyil, miqyası və nəticəni göstərməkdir.</p>
+</div>
+<div class="case-grid">
+<div class="case-card reveal">
+<span class="case-year">2016</span>
+<h4 data-i18n="k146">Mirai Botnet</h4>
+<p data-i18n="k147">Zəif defolt parollu IoT cihazları (kamera, router) yoluxduraraq DNS provayderi Dyn-a qarşı nəhəng DDoS hücumu — Twitter, Netflix və digər platformalar müvəqqəti əlçatmaz oldu.</p>
+<span class="case-vector" data-i18n="k148">DDoS</span>
+</div>
+<div class="case-card reveal">
+<span class="case-year">2017</span>
+<h4 data-i18n="k149">WannaCry</h4>
+<p data-i18n="k150">Yamaqlanmamış Windows zəifliyindən istifadə edən fidyə virusu qısa müddətdə 150-dən çox ölkədə xəstəxana və şirkət sistemlərini kilidlədi — vaxtında yamaqlamanın vacibliyini göstərdi.</p>
+<span class="case-vector" data-i18n="k151">Ransomware</span>
+</div>
+<div class="case-card reveal">
+<span class="case-year">2013</span>
+<h4 data-i18n="k152">Target pərakəndə sızması</h4>
+<p data-i18n="k153">Üçüncü tərəf podratçının kimlik məlumatlarının fişinq yolu ilə oğurlanması nəticəsində 40 milyondan çox ödəniş kartı məlumatı sızdı — tədarük zənciri riskinin klassik nümunəsi.</p>
+<span class="case-vector" data-i18n="k154">Fişinq</span>
+</div>
+<div class="case-card reveal">
+<span class="case-year">2020</span>
+<h4 data-i18n="k155">SolarWinds tədarük zənciri</h4>
+<p data-i18n="k156">Proqram təminatı yeniləmə prosesinə zərərli kod inteqrasiya olunaraq yüzlərlə təşkilata gizli giriş (RAT-vari davamlı giriş) əldə edildi — proqram tədarük zəncirinin nəzarətinin vacibliyini göstərdi.</p>
+<span class="case-vector" data-i18n="k157">Persistence</span>
+</div>
+</div>
+</section>
+<!-- RED TEAM TOOLS -->
+<section class="team-section team-red" id="redteam">
+<div class="team-head reveal">
+<span class="section-eyebrow eyebrow-red" data-i18n="k158">HÜCUM TƏRƏFİ</span>
+<h2 class="section-title type-on-scroll" data-i18n="k159">Red Team alətləri</h2>
+<p class="section-lead" data-i18n="k160">
+        Bu alətlər icazəli penetration test və təhlükəsizlik qiymətləndirmələrində zəiflikləri real şəraitdə
+        müəyyən etmək üçün istifadə olunur. Mərhələyə görə süzgəcdən keçir, kart üzərinə keç.
+      </p>
+<div class="tabs" data-target="redGrid">
+<button class="tab active" data-filter="all" data-i18n="k161">Hamısı</button>
+<button class="tab" data-filter="RECON" data-i18n="k162">Recon</button>
+<button class="tab" data-filter="EXPLOIT" data-i18n="k163">Exploit</button>
+<button class="tab" data-filter="DELIVER" data-i18n="k164">Deliver</button>
+<button class="tab" data-filter="PERSIST" data-i18n="k165">Persist</button>
+</div>
+</div>
+<div class="tool-grid" id="redGrid"></div>
+</section>
+<!-- BLUE TEAM TOOLS -->
+<section class="team-section team-blue" id="blueteam">
+<div class="team-head reveal">
+<span class="section-eyebrow eyebrow-blue" data-i18n="k166">MÜDAFİƏ TƏRƏFİ</span>
+<h2 class="section-title type-on-scroll" data-i18n="k167">Blue Team alətləri</h2>
+<p class="section-lead" data-i18n="k168">
+        Müdafiə tərəfi hadisələri real vaxtda aşkarlamaq, təhlil etmək və cavab vermək üçün bu alətlərdən
+        istifadə edir. Məqsəd — hücumu ən erkən mərhələdə tanımaq və zərəri məhdudlaşdırmaq.
+      </p>
+<div class="tabs" data-target="blueGrid">
+<button class="tab active" data-filter="all" data-i18n="k169">Hamısı</button>
+<button class="tab" data-filter="DETECT" data-i18n="k170">Detect</button>
+<button class="tab" data-filter="ANALYZE" data-i18n="k171">Analyze</button>
+<button class="tab" data-filter="RESPOND" data-i18n="k172">Respond</button>
+</div>
+</div>
+<div class="tool-grid" id="blueGrid"></div>
+</section>
+<!-- HAT TYPES -->
+<section class="hats-section" id="hats">
+<div class="team-head reveal">
+<span class="section-eyebrow" data-i18n="k173">TERMİNOLOGİYA</span>
+<h2 class="section-title type-on-scroll" data-i18n="k174">Haker "papaq" tipləri nə deməkdir?</h2>
+<p class="section-lead" data-i18n="k175">
+        "Red Team" və "Blue Team" — təşkilat daxilində rol bölgüsüdür. "Hat" (papaq) tipləri isə hakerin
+        <strong>niyyətini və qanuni statusunu</strong> təsvir edir. Hər tipin harada rast gəlindiyinə və
+        qanuni spektrdə harada yerləşdiyinə bax.
+      </p>
+</div>
+<div class="hat-block" id="hat-white">
+<div class="threat-index">01</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 class="type-on-scroll" data-i18n="k176">White Hat <span class="threat-sub">Etik haker</span></h3>
+<span class="tag tag-legal" data-i18n="k177">TAM QANUNİ</span>
+</div>
+<p data-i18n="k178">Təşkilatın <strong>yazılı icazəsi</strong> ilə zəiflik axtaran mütəxəssisdir. Tapdığı hər zəifliyi
+        məsuliyyətlə bildirir, heç vaxt zərər vermir. Pentest mütəxəssisləri, bug-bounty ovçuları və təhlükəsizlik
+        auditorları bu kateqoriyadadır.</p>
+<div class="scenario-box reveal">
+<div class="scenario-tag">HARADA RAST GƏLİNİR</div>
+<p data-i18n="k179">Bank hər il sertifikatlı pentest komandasını işə cəlb edir; komanda icazəli hücum aparıb tapdığı
+          zəiflikləri hesabatla bildirir, bank isə 30 gün ərzində bağlayır.</p>
+</div>
+<div class="spectrum reveal" data-pos="95">
+<span class="spectrum-label" data-i18n="k180">Qanunsuz</span>
+<div class="spectrum-track"><div class="spectrum-fill"></div><div class="spectrum-dot"></div></div>
+<span class="spectrum-label" data-i18n="k181">Qanuni</span>
+</div>
+</div>
+</div>
+<div class="hat-block alt" id="hat-black">
+<div class="threat-index">02</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 class="type-on-scroll" data-i18n="k182">Black Hat <span class="threat-sub">Zərərli haker</span></h3>
+<span class="tag tag-illegal" data-i18n="k183">TAM QANUNSUZ</span>
+</div>
+<p data-i18n="k184"><strong>İcazəsiz</strong> və qanunsuz məqsədlə (maliyyə mənfəəti, sabotaj, casusluq) sistemlərə daxil
+        olan hakerdir. Fəaliyyəti demək olar bütün yurisdiksiyalarda cinayət sayılır və ciddi cəza daşıyır.</p>
+<div class="scenario-box reveal">
+<div class="scenario-tag">HARADA RAST GƏLİNİR</div>
+<p data-i18n="k185">Oğurlanmış kredit kartı məlumatlarını qara bazarda satan və ya fidyə tələb edən mütəşəkkil
+          kiberqruplaşmalar bu kateqoriyaya aiddir.</p>
+</div>
+<div class="spectrum reveal" data-pos="5">
+<span class="spectrum-label" data-i18n="k186">Qanunsuz</span>
+<div class="spectrum-track"><div class="spectrum-fill"></div><div class="spectrum-dot"></div></div>
+<span class="spectrum-label" data-i18n="k187">Qanuni</span>
+</div>
+</div>
+</div>
+<div class="hat-block" id="hat-gray">
+<div class="threat-index">03</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 class="type-on-scroll" data-i18n="k188">Gray Hat <span class="threat-sub">Aralıq zona</span></h3>
+<span class="tag tag-gray" data-i18n="k189">QEYRİ-MÜƏYYƏN</span>
+</div>
+<p data-i18n="k190">İcazə <strong>olmadan</strong> zəiflik axtarır, lakin zərər vermək niyyəti yoxdur — tapdığını
+        adətən sonradan şirkətə pulsuz bildirir. Niyyət yaxşı olsa da, icazəsiz giriş özü artıq hüquqi risk
+        daşıyır, ona görə "aralıq zona" adlanır.</p>
+<div class="scenario-box reveal">
+<div class="scenario-tag">HARADA RAST GƏLİNİR</div>
+<p data-i18n="k191">Tədqiqatçı ictimai bir saytda təsadüfən zəiflik tapır, icazəsi olmadan bir az dərinləşib
+          doğrulayır, sonra şirkətə pulsuz məlumat verir — bəzən minnətdarlıq, bəzən hüquqi xəbərdarlıq alır.</p>
+</div>
+<div class="spectrum reveal" data-pos="45">
+<span class="spectrum-label" data-i18n="k192">Qanunsuz</span>
+<div class="spectrum-track"><div class="spectrum-fill"></div><div class="spectrum-dot"></div></div>
+<span class="spectrum-label" data-i18n="k193">Qanuni</span>
+</div>
+</div>
+</div>
+<div class="hat-block alt" id="hat-blue">
+<div class="threat-index">04</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 class="type-on-scroll" data-i18n="k194">Blue Hat <span class="threat-sub">Kənar auditor</span></h3>
+<span class="tag tag-legal" data-i18n="k195">QANUNİ</span>
+</div>
+<p data-i18n="k196">Məhsul buraxılışından əvvəl <strong>kənardan dəvət olunan</strong> təhlükəsizlik məsləhətçisidir.
+        Diqqət: bu, daxili "Blue Team"-dən fərqlidir — Blue Team təşkilatın daimi daxili müdafiə komandasıdır,
+        Blue Hat isə birdəfəlik xarici auditordur.</p>
+<div class="scenario-box reveal">
+<div class="scenario-tag">HARADA RAST GƏLİNİR</div>
+<p data-i18n="k197">Böyük proqram şirkəti yeni versiyanı buraxmadan əvvəl kənar mütəxəssisləri "BlueHat" tipli
+          tədbirə dəvət edərək son sınaqdan keçirir.</p>
+</div>
+<div class="spectrum reveal" data-pos="88">
+<span class="spectrum-label" data-i18n="k198">Qanunsuz</span>
+<div class="spectrum-track"><div class="spectrum-fill"></div><div class="spectrum-dot"></div></div>
+<span class="spectrum-label" data-i18n="k199">Qanuni</span>
+</div>
+</div>
+</div>
+<div class="hat-block" id="hat-red">
+<div class="threat-index">05</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 class="type-on-scroll" data-i18n="k200">Red Hat <span class="threat-sub">Vicilante haker</span></h3>
+<span class="tag tag-illegal" data-i18n="k201">QANUNSUZ</span>
+</div>
+<p data-i18n="k202">Black hat-lara qarşı <strong>özbaşına əks-hücum</strong> aparan hakerdir. Diqqət: bu, təşkilat
+        daxilində icazə ilə işləyən "Red Team"-dən tamamilə fərqlidir — Red Team icazəlidir, Red Hat isə
+        özbaşına hərəkət etdiyi üçün özü də qanunsuz sayılır.</p>
+<div class="scenario-box reveal">
+<div class="scenario-tag">HARADA RAST GƏLİNİR</div>
+<p data-i18n="k203">Fərdi haker qrupu bir fidyə-virus operatorunun infrastrukturunu özbaşına pozmağa çalışır —
+          niyyət "ədalətli" görünsə də, hərəkətin özü qanunsuzdur.</p>
+</div>
+<div class="spectrum reveal" data-pos="18">
+<span class="spectrum-label" data-i18n="k204">Qanunsuz</span>
+<div class="spectrum-track"><div class="spectrum-fill"></div><div class="spectrum-dot"></div></div>
+<span class="spectrum-label" data-i18n="k205">Qanuni</span>
+</div>
+</div>
+</div>
+<div class="hat-block alt" id="hat-green">
+<div class="threat-index">06</div>
+<div class="threat-body reveal">
+<div class="threat-head">
+<h3 class="type-on-scroll" data-i18n="k206">Green Hat <span class="threat-sub">Yeni başlayan</span></h3>
+<span class="tag tag-neutral" data-i18n="k207">ÖYRƏNMƏ MƏRHƏLƏSİ</span>
+</div>
+<p data-i18n="k208">Sahəyə yeni <strong>öyrənməyə başlayan</strong> həvəskardır. Təcrübəsi azdır, lakin öyrənmə həvəsi
+        yüksəkdir. Statusu öz hərəkətlərindən asılıdır — qanuni laboratoriyalarda öyrənən Green Hat tamamilə
+        qanunidir.</p>
+<div class="scenario-box reveal">
+<div class="scenario-tag">HARADA RAST GƏLİNİR</div>
+<p data-i18n="k209">TryHackMe-də ilk "otağını" həll edən, Discord icmalarında sual verən yeni başlayan tələbə —
+          sabahın White Hat-ı, Red Team üzvü və ya Blue Team analitiki bu mərhələdən başlayır.</p>
+</div>
+<div class="spectrum reveal" data-pos="65">
+<span class="spectrum-label" data-i18n="k210">Qanunsuz</span>
+<div class="spectrum-track"><div class="spectrum-fill"></div><div class="spectrum-dot"></div></div>
+<span class="spectrum-label" data-i18n="k211">Qanuni</span>
+</div>
+</div>
+</div>
+</section>
+<section class="labs-section" id="labs">
+<div class="team-head reveal">
+<span class="section-eyebrow" data-i18n="k212">QANUNİ TƏTBİQ</span>
+<h2 class="section-title type-on-scroll" data-i18n="k213">Bu bacarıqları haradan qanuni öyrənmək olar?</h2>
+<p class="section-lead" data-i18n="k214">Yuxarıda adı çəkilən heç bir alət başqasının sisteminə qarşı icazəsiz istifadə oluna bilməz. Əvəzində aşağıdaki platformalar qanuni, təcrid olunmuş laboratoriya mühiti təqdim edir.</p>
+<div class="labs-legend">
+<span class="legend-item" data-i18n="k215"><i class="fa-solid fa-circle cat-red"></i> Red Team fokuslu</span>
+<span class="legend-item" data-i18n="k216"><i class="fa-solid fa-circle cat-blue"></i> Blue Team fokuslu</span>
+<span class="legend-item" data-i18n="k217"><i class="fa-solid fa-circle cat-both"></i> Hər iki tərəf</span>
+<span class="legend-item" data-i18n="k218"><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span><span class="lvl-dot"></span> Çətinlik səviyyəsi</span>
+</div>
+<div class="tabs" data-attr="cat" data-target="platformGrid">
+<button class="tab active" data-filter="all" data-i18n="k219">Hamısı</button>
+<button class="tab" data-filter="red" data-i18n="k220">Red Team</button>
+<button class="tab" data-filter="blue" data-i18n="k221">Blue Team</button>
+<button class="tab" data-filter="both" data-i18n="k222">Hər ikisi</button>
+</div>
+</div>
+<div class="platform-grid" id="platformGrid">
+<div class="platform-card reveal" data-cat="red">
+<div class="platform-icon-wrap cat-red"><i class="fa-solid fa-cubes"></i></div>
+<span class="platform-cat cat-red" data-i18n="k223">RED</span>
+<h4 data-i18n="k224">HackTheBox</h4>
+<p data-i18n="k225">Real-vaxt simulyasiya edilmiş, qanuni hədəf maşınlar üzərində hücum bacarıqlarını sınamaq üçün platforma.</p>
+<div class="platform-level" title="Çətinlik səviyyəsi"><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span></div>
+</div>
+<div class="platform-card reveal" data-cat="red">
+<div class="platform-icon-wrap cat-red"><i class="fa-solid fa-crosshairs"></i></div>
+<span class="platform-cat cat-red" data-i18n="k226">RED</span>
+<h4 data-i18n="k227">TryHackMe</h4>
+<p data-i18n="k228">Addım-addım təlimatlı otaqlarla kibertəhlükəsizliyə başlayanlar üçün idealdır.</p>
+<div class="platform-level" title="Çətinlik səviyyəsi"><span class="lvl-dot filled"></span><span class="lvl-dot"></span><span class="lvl-dot"></span></div>
+</div>
+<div class="platform-card reveal" data-cat="red">
+<div class="platform-icon-wrap cat-red"><i class="fa-solid fa-graduation-cap"></i></div>
+<span class="platform-cat cat-red" data-i18n="k229">RED</span>
+<h4 data-i18n="k230">PortSwigger Web Academy</h4>
+<p data-i18n="k231">Veb tətbiq zəifliklərini (SQLi, XSS və s.) pulsuz, qanuni laboratoriyalarda öyrənmək üçün.</p>
+<div class="platform-level" title="Çətinlik səviyyəsi"><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span><span class="lvl-dot"></span></div>
+</div>
+<div class="platform-card reveal" data-cat="red">
+<div class="platform-icon-wrap cat-red"><i class="fa-solid fa-bug"></i></div>
+<span class="platform-cat cat-red" data-i18n="k232">RED</span>
+<h4 data-i18n="k233">OWASP Juice Shop</h4>
+<p data-i18n="k234">Qəsdən zəif buraxılmış nümunə veb tətbiq — öz kompüterində quraşdırıb sınamaq olar.</p>
+<div class="platform-level" title="Çətinlik səviyyəsi"><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span><span class="lvl-dot"></span></div>
+</div>
+<div class="platform-card reveal" data-cat="red">
+<div class="platform-icon-wrap cat-red"><i class="fa-solid fa-server"></i></div>
+<span class="platform-cat cat-red" data-i18n="k235">RED</span>
+<h4 data-i18n="k236">DVWA / Metasploitable</h4>
+<p data-i18n="k237">Yerli virtual maşında işə salınan, qəsdən zəif buraxılmış təlim mühitləri.</p>
+<div class="platform-level" title="Çətinlik səviyyəsi"><span class="lvl-dot filled"></span><span class="lvl-dot"></span><span class="lvl-dot"></span></div>
+</div>
+<div class="platform-card reveal" data-cat="both">
+<div class="platform-icon-wrap cat-both"><i class="fa-solid fa-trophy"></i></div>
+<span class="platform-cat cat-both" data-i18n="k238">HƏR İKİSİ</span>
+<h4 data-i18n="k239">picoCTF / CTFtime</h4>
+<p data-i18n="k240">Komanda halında rəqabətli tapşırıqlarla bacarıq inkişaf etdirmək üçün CTF yarışları.</p>
+<div class="platform-level" title="Çətinlik səviyyəsi"><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span><span class="lvl-dot"></span></div>
+</div>
+<div class="platform-card reveal" data-cat="red">
+<div class="platform-icon-wrap cat-red"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+<span class="platform-cat cat-red" data-i18n="k241">RED</span>
+<h4 data-i18n="k242">HackerOne / Bugcrowd</h4>
+<p data-i18n="k243">Şirkətlərin rəsmi icazəsi ilə zəiflik tapıb mükafat qazanmaq üçün bug-bounty platformaları.</p>
+<div class="platform-level" title="Çətinlik səviyyəsi"><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span></div>
+</div>
+<div class="platform-card reveal" data-cat="blue">
+<div class="platform-icon-wrap cat-blue"><i class="fa-solid fa-chart-line"></i></div>
+<span class="platform-cat cat-blue" data-i18n="k244">BLUE</span>
+<h4 data-i18n="k245">LetsDefend / Blue Team Labs</h4>
+<p data-i18n="k246">SOC analitiki perspektivindən real SIEM ssenarilərini simulyasiya edən Blue Team təlim platformaları.</p>
+<div class="platform-level" title="Çətinlik səviyyəsi"><span class="lvl-dot filled"></span><span class="lvl-dot filled"></span><span class="lvl-dot"></span></div>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+<div class="team-head reveal">
+<span class="section-eyebrow" data-i18n="k247">SUAL-CAVAB</span>
+<h2 class="section-title type-on-scroll" data-i18n="k248">Tez-tez verilən suallar</h2>
+</div>
+<div class="accordion reveal">
+<div class="acc-item">
+<button class="acc-head" data-i18n="k249">Bu alətləri evdə sınaya bilərəm? <i class="acc-icon">+</i></button>
+<div class="acc-body"><p data-i18n="k250">Bəli — lakin yalnız öz idarə etdiyin, internetdən təcrid olunmuş virtual maşında (məs. VirtualBox + Metasploitable/DVWA) və ya yuxarıda göstərilən qanuni platformalarda. Başqasının real sisteminə, hətta "sadəcə yoxlamaq üçün" belə, icazəsiz müraciət qanunsuzdur.</p></div>
+</div>
+<div class="acc-item">
+<button class="acc-head" data-i18n="k251">Fişinq testi keçirmək qanunidirmi? <i class="acc-icon">+</i></button>
+<div class="acc-body"><p data-i18n="k252">Yalnız təşkilatın rəhbərliyinin yazılı razılığı ilə, məsələn GoPhish və ya KnowBe4 kimi korporativ simulyasiya proqramları çərçivəsində. İcazəsiz aparılan fişinq — hətta "zərərsiz" test məqsədilə olsa da — kibercinayət sayılır.</p></div>
+</div>
+<div class="acc-item">
+<button class="acc-head" data-i18n="k253">DDoS testi hər zaman cinayətdirmi? <i class="acc-icon">+</i></button>
+<div class="acc-body"><p data-i18n="k254">Başqasının serverinə icazəsiz göndərilən trafik — bəli, demək olar bütün yurisdiksiyalarda cinayətdir. Öz infrastrukturuna, provayderin razılığı ilə aparılan yük testi isə qanuni performans mühəndisliyi sayılır.</p></div>
+</div>
+<div class="acc-item">
+<button class="acc-head" data-i18n="k255">Red Team olmaq üçün nə öyrənməliyəm? <i class="acc-icon">+</i></button>
+<div class="acc-body"><p data-i18n="k256">Şəbəkə əsasları, əməliyyat sistemləri, skript yazma (Python/Bash), veb tətbiq təhlükəsizliyi və CTF təcrübəsi. Sənaye sertifikatları: Security+, CEH, OSCP.</p></div>
+</div>
+<div class="acc-item">
+<button class="acc-head" data-i18n="k257">Blue Team olmaq üçün nə öyrənməliyəm? <i class="acc-icon">+</i></button>
+<div class="acc-body"><p data-i18n="k258">Log analizi, SIEM platformaları, insident cavab prosedurları və şəbəkə monitorinqi. Sənaye sertifikatları: Security+, CySA+, GCIH.</p></div>
+</div>
+<div class="acc-item">
+<button class="acc-head" data-i18n="k259">Bu sayt real hücum kodu təqdim edirmi? <i class="acc-icon">+</i></button>
+<div class="acc-body"><p data-i18n="k260">Xeyr. Bu, tamamilə konseptual/təhsil xarakterli icmaldır — heç bir işlək exploit, zərərli proqram kodu və ya hazır hücum skripti daxil edilməyib.</p></div>
+</div>
+</div>
+</section>
+<!-- ETHICS -->
+<section class="ethics" id="ethics">
+<div class="ethics-inner reveal">
+<span class="section-eyebrow" data-i18n="k261">HÜQUQİ ÇƏRÇİVƏ</span>
+<h2 class="section-title type-on-scroll" data-i18n="k262">İcazəsiz sınaq = cinayətdir</h2>
+<p class="section-lead" data-i18n="k263">
+        Bu səhifədə adı çəkilən bütün alətlər və texnikalar yalnız <strong>yazılı icazə əsasında</strong>,
+        öz sistemində, təhsil mühitində və ya qanuni bug-bounty proqramları çərçivəsində istifadə olunmalıdır.
+        Əksər ölkələrdə (Budapeşt Kiber Cinayət Konvensiyasına qoşulmuş dövlətlər daxil olmaqla) icazəsiz
+        sistemə giriş, məlumat oğurluğu, xidmətin dayandırılması və zərərli proqram yayımı cinayət
+        məsuliyyəti yaradır — cəza cərimədən həbs müddətinə qədər dəyişə bilər.
+      </p>
+<div class="legal-grid">
+<div class="legal-card reveal">
+<h4 data-i18n="k264">İcazəsiz giriş</h4>
+<p data-i18n="k265">Başqasının sisteminə, hesabına və ya şəbəkəsinə icazəsiz daxil olmaq əksər ölkələrdə cinayət sayılır — nəticə əldə edilməsə belə.</p>
+</div>
+<div class="legal-card reveal">
+<h4 data-i18n="k266">Xidmətin pozulması</h4>
+<p data-i18n="k267">DDoS və oxşar hücumlarla bir xidməti işləməz vəziyyətə salmaq — maliyyə zərəri ilə yanaşı ayrıca cinayət maddəsi yaradır.</p>
+</div>
+<div class="legal-card reveal">
+<h4 data-i18n="k268">Zərərli proqram yayımı</h4>
+<p data-i18n="k269">RAT və digər zərərli proqramların yaradılması, paylaşılması və ya yayılması bir çox yurisdiksiyada müstəqil cinayət tərkibidir.</p>
+</div>
+<div class="legal-card reveal">
+<h4 data-i18n="k270">Sosial mühəndislik / fişinq</h4>
+<p data-i18n="k271">İcazəsiz kimlik məlumatı və ya maliyyə vəsaiti əldə etmək məqsədilə saxtakarlıq fırıldaqçılıq maddələri altına düşür.</p>
+</div>
+</div>
+<div class="ethics-badges">
+<span data-i18n="k272">✓ Yazılı icazə</span>
+<span data-i18n="k273">✓ Məhdud əhatə dairəsi</span>
+<span data-i18n="k274">✓ Sənədləşdirilmiş nəticə</span>
+<span data-i18n="k275">✓ Sorumlu açıqlama</span>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="footer-inner">
+<div class="brand">
+<span class="brand-mark">◈</span>
+<span class="brand-text">CYBER<span class="accent-split">LAB</span></span>
+</div>
+<p data-i18n="k276">Təhlükəsizlik təhsili məqsədli konseptual mənbə. Heç bir icra oluna bilən hücum kodu daxil deyil. © 2026</p>
+<div class="footer-links">
+<a data-i18n="k277" href="#osint">OSINT</a><a data-i18n="k278" href="#ddos">DDoS</a><a data-i18n="k279" href="#rat">RAT</a>
+<a data-i18n="k280" href="#phishing">Fişinq</a><a data-i18n="k281" href="#redteam">Red Team</a><a data-i18n="k282" href="#blueteam">Blue Team</a>
+<a data-i18n="k283" href="#labs">Test mühitləri</a><a data-i18n="k284" href="#faq">FAQ</a>
+</div>
+</div>
+</footer>
+<button aria-label="Yuxarı qalx" class="to-top" id="toTop">↑</button>
+<script src="translations.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

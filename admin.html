@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | CyberLab</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E13;--surface:#121922;--surface-2:#161F29;--border:#232E3A;
+    --text:#D9E2E9;--text-dim:#8A9AA8;--text-faint:#5A6A78;
+    --red:#FF3B4E;--red-glow:rgba(255,59,78,.2);
+    --blue:#26C9E0;--blue-glow:rgba(38,201,224,.2);
+    --green:#3DDC84;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
+    min-height:100vh;padding:32px 20px 60px;
+  }
+  header{max-width:1100px;margin:0 auto 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+  .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;display:flex;align-items:center;gap:8px;}
+  .brand .mark{color:var(--red);}
+  .brand .sub{color:var(--blue);}
+  .live-badge{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--green);
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--border);padding:7px 14px;border-radius:100px;
+  }
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.4s infinite;}
+  @keyframes blink{50%{opacity:.25;}}
+
+  main{max-width:1100px;margin:0 auto;}
+
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;
+  }
+  @media (max-width:760px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;
+  }
+  .stat-card .label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);letter-spacing:.05em;margin-bottom:8px;}
+  .stat-card .value{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;}
+  .stat-card.warn .value{color:var(--red);}
+  .stat-card.ok .value{color:var(--green);}
+
+  section.panel{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    padding:24px;margin-bottom:24px;
+  }
+  section.panel h2{
+    font-family:'Space Grotesk',sans-serif;font-size:16px;margin-bottom:16px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  .config-row{
+    display:flex;gap:24px;flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--text-dim);
+    margin-bottom:18px;
+  }
+  .config-row span b{color:var(--text);}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th{
+    text-align:left;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;
+    color:var(--text-faint);padding:10px 12px;border-bottom:1px solid var(--border);
+  }
+  td{padding:12px;border-bottom:1px solid var(--border);color:var(--text-dim);}
+  td.ip{font-family:'IBM Plex Mono',monospace;color:var(--text);}
+  .empty-row td{text-align:center;color:var(--text-faint);padding:28px;}
+
+  .btn{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;
+    padding:8px 14px;border-radius:8px;border:1px solid var(--border);color:var(--text);
+    background:none;cursor:pointer;transition:border-color .2s,color .2s;
+  }
+  .btn:hover{border-color:var(--green);color:var(--green);}
+  .btn-danger:hover{border-color:var(--red);color:var(--red);}
+
+  form.block-form{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  form.block-form input{
+    background:var(--surface-2);border:1px solid var(--border);border-radius:8px;
+    padding:9px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+  }
+  form.block-form input[name="ip"]{flex:1;min-width:160px;}
+  form.block-form input[name="minutes"]{width:90px;}
+  .btn-primary{background:var(--red);border-color:var(--red);color:#fff;}
+  .btn-primary:hover{opacity:.9;color:#fff;border-color:var(--red);}
+
+  .toast{
+    position:fixed;bottom:24px;right:24px;
+    background:var(--surface-2);border:1px solid var(--border);border-radius:10px;
+    padding:12px 18px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    opacity:0;transform:translateY(10px);transition:opacity .3s, transform .3s;
+    pointer-events:none;
+  }
+  .toast.show{opacity:1;transform:translateY(0);}
+
+  .error-box{
+    max-width:1100px;margin:80px auto;text-align:center;
+    font-family:'IBM Plex Mono',monospace;color:var(--red);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span class="mark">◈</span>CYBER<span class="sub">LAB</span> <span style="color:var(--text-faint);font-weight:400;font-size:14px;">/ admin</span></div>
+  <span class="live-badge"><span class="live-dot"></span> CANLI</span>
+</header>
+
+<main>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="label">UPTIME</div><div class="value" id="stat-uptime">—</div></div>
+    <div class="stat-card"><div class="label">ÜMUMİ SORĞU</div><div class="value" id="stat-total">—</div></div>
+    <div class="stat-card warn"><div class="label">BLOKLANMIŞ SORĞU</div><div class="value" id="stat-blocked">—</div></div>
+    <div class="stat-card ok"><div class="label">UNİKAL IP</div><div class="value" id="stat-ips">—</div></div>
+  </div>
+
+  <section class="panel">
+    <h2>Konfiqurasiya</h2>
+    <div class="config-row">
+      <span>Dəqiqədə limit: <b id="cfg-rate">—</b></span>
+      <span>Strike limiti: <b id="cfg-strike">—</b></span>
+      <span>Blok müddəti: <b id="cfg-block">—</b> dəq</span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>
+      Bloklanmış IP-lər
+      <button class="btn" id="refreshBtn">↻ Yenilə</button>
+    </h2>
+    <table>
+      <thead>
+        <tr><th>IP ünvanı</th><th>Qalan müddət</th><th></th></tr>
+      </thead>
+      <tbody id="blockedTableBody">
+        <tr class="empty-row"><td colspan="3">Yüklənir...</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>Manual IP idarəetməsi</h2>
+    <form class="block-form" id="blockForm">
+      <input type="text" name="ip" placeholder="IP ünvanı (məs. 192.168.1.10)" required>
+      <input type="number" name="minutes" placeholder="dəqiqə" min="1">
+      <button type="submit" class="btn btn-primary">Blokla</button>
+    </form>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  let toastTimer;
+
+  function showToast(msg){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  function fmtUptime(sec){
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    return `${h}s ${m}d ${s}an`;
+  }
+
+  async function loadStatus(){
+    try{
+      const res = await fetch('/admin/api/status', { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error('status fetch failed');
+      const data = await res.json();
+
+      $('stat-uptime').textContent = fmtUptime(data.uptimeSeconds);
+      $('stat-total').textContent = data.totalRequests.toLocaleString('az');
+      $('stat-blocked').textContent = data.blockedRequests.toLocaleString('az');
+      $('stat-ips').textContent = data.uniqueIps.toLocaleString('az');
+
+      $('cfg-rate').textContent = data.config.rateLimitMax;
+      $('cfg-strike').textContent = data.config.strikeLimit;
+      $('cfg-block').textContent = data.config.blockMinutes;
+
+      const tbody = $('blockedTableBody');
+      if (!data.blockedIps.length){
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="3">Hazırda bloklanmış IP yoxdur.</td></tr>';
+      } else {
+        tbody.innerHTML = data.blockedIps.map(b => `
+          <tr>
+            <td class="ip">${b.ip}</td>
+            <td>${b.remainingMinutes} dəq</td>
+            <td><button class="btn" data-unblock="${b.ip}">Blokdan çıxar</button></td>
+          </tr>
+        `).join('');
+      }
+    } catch(e){
+      console.error(e);
+    }
+  }
+
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-unblock]');
+    if (!btn) return;
+    const ip = btn.dataset.unblock;
+    btn.disabled = true;
+    try{
+      const res = await fetch('/admin/api/unblock', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ip }),
+      });
+      if (res.ok){
+        showToast(`${ip} blokdan çıxarıldı`);
+        loadStatus();
+      }
+    } catch(e){ console.error(e); }
+    btn.disabled = false;
+  });
+
+  $('blockForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const ip = fd.get('ip');
+    const minutes = fd.get('minutes') ? Number(fd.get('minutes')) : undefined;
+    try{
+      const res = await fetch('/admin/api/block', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ip, minutes }),
+      });
+      if (res.ok){
+        showToast(`${ip} bloklandı`);
+        e.target.reset();
+        loadStatus();
+      }
+    } catch(e){ console.error(e); }
+  });
+
+  $('refreshBtn').addEventListener('click', loadStatus);
+
+  loadStatus();
+  setInterval(loadStatus, 5000);
+</script>
+</body>
+</html>

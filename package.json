@@ -1,0 +1,22 @@
+{
+  "name": "cyberlab",
+  "version": "1.0.0",
+  "description": "CyberLab — çoxdilli kibertəhlükəsizlik təhsil saytı və təhlükəsizlik-gücləndirilmiş serveri",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "dev": "node server.js",
+    "audit": "npm audit"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "express-slow-down": "^2.0.1",
+    "helmet": "^7.1.0",
+    "hpp": "^0.2.3",
+    "morgan": "^1.10.0"
+  }
+}

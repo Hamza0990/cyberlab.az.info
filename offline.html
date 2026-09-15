@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Şəbəkə yoxdur | CyberLab</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0A0E13;--text:#D9E2E9;--text-dim:#8A9AA8;--red:#FF3B4E;--blue:#26C9E0;--border:#232E3A;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;
+       display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;}
+  .icon{width:64px;height:64px;margin-bottom:22px;color:var(--red);}
+  .title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(24px,5vw,34px);margin-bottom:12px;}
+  .msg{font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--text-dim);max-width:400px;line-height:1.7;margin-bottom:28px;}
+  .status{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+          color:var(--red);border:1px solid var(--border);padding:9px 18px;border-radius:100px;margin-bottom:26px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1.4s infinite;}
+  @keyframes blink{50%{opacity:.25;}}
+  button{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text);background:none;
+         border:1px solid var(--border);padding:12px 22px;border-radius:100px;cursor:pointer;
+         transition:border-color .25s,color .25s;}
+  button:hover{border-color:var(--blue);color:var(--blue);}
+</style>
+</head>
+<body>
+  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9z" opacity=".35"/>
+    <path d="M5 13l2 2a7.07 7.07 0 0 1 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" opacity=".6"/>
+    <path d="M9 17l2 2a2.83 2.83 0 0 1 2 0l2-2a4.24 4.24 0 0 0-6 0z"/>
+    <line x1="2" y1="2" x2="22" y2="22"/>
+  </svg>
+  <div class="title" id="t"></div>
+  <p class="msg" id="m"></p>
+  <div class="status"><span class="dot"></span> OFFLINE</div>
+  <button id="b" onclick="location.reload()"></button>
+
+  <script>
+    var T = {
+      az:{t:'Şəbəkəniz yoxdur', m:'CyberLab-a qoşulmaq üçün internetə ehtiyac var. Şəbəkəyə qoşulan kimi bu səhifə avtomatik yenidən yüklənəcək.', b:'Yenidən yoxla', title:'Şəbəkə yoxdur | CyberLab'},
+      en:{t:'You are offline', m:'An internet connection is required to reach CyberLab. This page will reload automatically as soon as you are back online.', b:'Retry', title:'Offline | CyberLab'},
+      ru:{t:'Нет подключения', m:'Для доступа к CyberLab нужен интернет. Эта страница автоматически перезагрузится, как только связь восстановится.', b:'Проверить снова', title:'Нет сети | CyberLab'},
+      tr:{t:'Bağlantınız yok', m:'CyberLab’a erişmek için internet gerekiyor. Ağa bağlandığınız anda bu sayfa otomatik olarak yeniden yüklenecek.', b:'Tekrar dene', title:'Çevrimdışı | CyberLab'}
+    };
+    var lang = (navigator.language || 'az').slice(0,2).toLowerCase();
+    var d = T[lang] || T.az;
+    document.documentElement.lang = T[lang] ? lang : 'az';
+    document.title = d.title;
+    document.getElementById('t').textContent = d.t;
+    document.getElementById('m').textContent = d.m;
+    document.getElementById('b').textContent = d.b;
+
+    window.addEventListener('online', function(){ location.reload(); });
+    setInterval(function(){ if (navigator.onLine) location.reload(); }, 4000);
+  </script>
+</body>
+</html>
