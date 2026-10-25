@@ -27,17 +27,6 @@ CYBERLAB — çoxdilli kibertəhlükəsizlik təhsil platformasıdır. Məqsəd 
 ```
 
 
-
-## Nə ilə qurulub
-
-- **Frontend:**  
-  - `index.html` → struktur + SEO teqləri  
-  - `style.css` → dizayn, animasiyalar, dark/light rejim  
-  - `app.js` → interaktivlik, dil dəyişmə (i18n)  
-  - `translations.js` → tərcümələr  
-
----
-
 ## Hansı səbəbdən düzəlib
 
 - **Kibertəhlükəsizlik biliklərini paylaşmaq** — hücumların məntiqini anlamaqla müdafiəni gücləndirmək.  
