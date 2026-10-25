@@ -1,0 +1,645 @@
+/* ==========================================================
+   CYBERLAB — soon/style.css
+   "Tezliklə" (Coming soon) səhifəsi. Əsas saytın rəng/şrift
+   dəyişənləri ilə eynidir ki, brend hissi qırılmasın, amma
+   fayl tam müstəqildir (əsas style.css-dən asılı deyil).
+========================================================== */
+:root {
+  --bg: #0A0E13;
+  --bg-alt: #0E141B;
+  --surface: #121922;
+  --surface-2: #161F29;
+  --border: #232E3A;
+  --text: #D9E2E9;
+  --text-dim: #8A9AA8;
+  --text-faint: #5A6A78;
+  --red: #FF3B4E;
+  --red-glow: rgba(255, 59, 78, .35);
+  --blue: #26C9E0;
+  --blue-glow: rgba(38, 201, 224, .35);
+  --green: #3DDC84;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+  --ease: cubic-bezier(.22, .8, .28, 1);
+}
+
+[data-theme="light"] {
+  --bg: #EDF1F4;
+  --bg-alt: #E4E9ED;
+  --surface: #FFFFFF;
+  --surface-2: #F4F7F9;
+  --border: #D3DBE1;
+  --text: #141A20;
+  --text-dim: #4E5C68;
+  --text-faint: #8496A3;
+  --red: #D6273A;
+  --red-glow: rgba(214, 39, 58, .18);
+  --blue: #0F8FA6;
+  --blue-glow: rgba(15, 143, 166, .18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  touch-action: pan-x pan-y;
+  -ms-touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  touch-action: pan-x pan-y;
+  transition: background .5s var(--ease), color .5s var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: .001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001s !important;
+  }
+}
+
+#bgCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: .5;
+}
+
+/* ---------- Top bar ---------- */
+.soon-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 26px;
+  flex: 0 0 auto;
+}
+
+.soon-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.brand-mark {
+  color: var(--red);
+  font-size: 18px;
+  filter: drop-shadow(0 0 6px var(--red-glow));
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: .02em;
+}
+
+.accent-split {
+  color: var(--blue);
+}
+
+/* ---------- Theme toggle ---------- */
+.theme-toggle {
+  position: relative;
+  z-index: 2;
+  margin-left: auto;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toggle-track {
+  width: 52px;
+  height: 28px;
+  border-radius: 20px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: background .3s;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--blue));
+  transition: left .35s var(--ease);
+  box-shadow: 0 0 10px var(--red-glow);
+}
+
+[data-theme="light"] .toggle-thumb {
+  left: 28px;
+  box-shadow: 0 0 10px var(--blue-glow);
+}
+
+.toggle-icon {
+  font-size: 11px;
+  position: relative;
+  z-index: 0;
+  color: var(--text-faint);
+}
+
+.toggle-icon.sun {
+  margin-left: 6px;
+}
+
+.toggle-icon.moon {
+  margin-left: auto;
+  margin-right: 6px;
+}
+
+.soon-lang {
+  position: relative;
+}
+
+.soon-lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 100px;
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+
+.soon-lang-trigger:hover {
+  color: var(--text);
+  border-color: var(--blue);
+}
+
+.soon-lang-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 170px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: .18s var(--ease);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .35);
+}
+
+.soon-lang.open .soon-lang-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.soon-lang-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.soon-lang-menu button:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.soon-lang-menu button[aria-current="true"] {
+  color: var(--blue);
+}
+
+/* ---------- Main card ---------- */
+.soon-main {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  overflow: hidden;
+}
+
+.soon-card {
+  width: 100%;
+  max-width: 540px;
+  max-height: 100%;
+  overflow: hidden;
+  text-align: center;
+  background: linear-gradient(180deg, var(--surface), var(--bg-alt));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: clamp(18px, 4vh, 36px) clamp(20px, 4vw, 34px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  position: relative;
+  animation: cardIn .6s var(--ease) both;
+}
+
+.soon-card::before {
+  content: '';
+  position: absolute;
+  inset: -40% -20% auto -20%;
+  height: 220px;
+  background: radial-gradient(closest-side, var(--red-glow), transparent 70%);
+  opacity: .4;
+  pointer-events: none;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.soon-icon-wrap {
+  position: relative;
+  width: clamp(64px, 10vh, 96px);
+  height: clamp(64px, 10vh, 96px);
+  margin: 0 auto clamp(10px, 2vh, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.soon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+}
+
+.ring-1 {
+  animation: ringPulse 2.6s ease-out infinite;
+}
+
+.ring-2 {
+  animation: ringPulse 2.6s ease-out infinite 1.3s;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(.7);
+    opacity: .9;
+    border-color: var(--blue);
+  }
+
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+    border-color: var(--red);
+  }
+}
+
+.soon-icon {
+  position: relative;
+  z-index: 1;
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(20px, 3.4vh, 30px);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  background-image: linear-gradient(135deg, var(--red), var(--blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  box-shadow: 0 0 0 1px var(--border), 0 18px 40px rgba(0, 0, 0, .35);
+  animation: iconFloat 3.4s ease-in-out infinite;
+}
+
+.soon-icon i {
+  -webkit-text-fill-color: transparent;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes iconFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.soon-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  color: var(--text-faint);
+  margin: 0 0 clamp(6px, 1.4vh, 10px);
+}
+
+.soon-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 4.4vh, 32px);
+  line-height: 1.22;
+  margin: 0 0 clamp(8px, 1.6vh, 14px);
+}
+
+.soon-network {
+  display: block;
+  margin-top: 2px;
+  font-size: .7em;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.soon-desc {
+  color: var(--text-dim);
+  font-size: clamp(12.5px, 2vh, 14.5px);
+  line-height: 1.6;
+  max-width: 420px;
+  margin: 0 auto clamp(14px, 2.4vh, 24px);
+}
+
+/* ---------- Status sətri (proqres faizi əvəzinə: canlı, funksional animasiya) ---------- */
+.soon-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: clamp(11.5px, 1.8vh, 13px);
+  color: var(--text-dim);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 9px 16px;
+  margin: 0 auto clamp(16px, 2.6vh, 26px);
+  max-width: 100%;
+  min-height: 1.4em;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(61, 220, 132, .6);
+  animation: statusPulse 1.6s ease-out infinite;
+}
+
+@keyframes statusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(61, 220, 132, .55);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgba(61, 220, 132, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(61, 220, 132, 0);
+  }
+}
+
+.status-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.status-cursor {
+  color: var(--blue);
+  animation: cursorBlink 1s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes cursorBlink {
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.soon-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: clamp(16px, 2.6vh, 28px);
+}
+
+.soon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .2s var(--ease), border-color .2s, background .2s, box-shadow .2s;
+  border: 1px solid transparent;
+}
+
+.soon-btn:hover {
+  transform: translateY(-2px);
+}
+
+.soon-btn-primary {
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  color: #080C10;
+}
+
+.soon-btn-whatsapp {
+  background: #1E2A22;
+  border-color: #2A4736;
+  color: #5FE38B;
+}
+
+.soon-btn-whatsapp i {
+  font-size: 15px;
+}
+
+.soon-btn-whatsapp:hover {
+  background: #25D366;
+  border-color: #25D366;
+  color: #08170F;
+  box-shadow: 0 10px 26px rgba(37, 211, 102, .35);
+}
+
+.soon-other {
+  border-top: 1px solid var(--border);
+  padding-top: clamp(12px, 2vh, 20px);
+  width: 100%;
+}
+
+.soon-other p {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin: 0 0 clamp(8px, 1.6vh, 14px);
+  font-family: var(--font-mono);
+}
+
+.soon-other-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.soon-other-icons a {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 13px;
+  text-decoration: none;
+  transition: .2s var(--ease);
+}
+
+.soon-other-icons a:hover {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--red), var(--blue));
+  transform: translateY(-3px);
+}
+
+.soon-other-icons a.is-current {
+  outline: 1px solid var(--blue);
+  color: var(--blue);
+}
+
+.soon-foot {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 10px 16px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  border-top: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+@media (max-width:480px) {
+  .soon-card {
+    padding: 16px 18px;
+  }
+
+  .soon-top {
+    padding: 14px 14px;
+  }
+
+  .status-text {
+    max-width: 44vw;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-height:640px) {
+  .soon-icon-wrap {
+    display: none;
+  }
+
+  .soon-desc {
+    display: none;
+  }
+}
+/* ---------- Light tema: düymələr və kontrast ---------- */
+[data-theme="light"] .soon-btn-primary {
+  color: #fff;
+}
+
+[data-theme="light"] .soon-btn-whatsapp {
+  background: #E6F7EC;
+  border-color: #9ED9B3;
+  color: #12713A;
+}
+
+[data-theme="light"] .soon-btn-whatsapp:hover {
+  background: #25D366;
+  border-color: #25D366;
+  color: #08170F;
+}
+
+/* Toxunma cihazlarında düymələr rahat basılsın, kiçik ekranda sığsın */
+.soon-actions {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.soon-btn {
+  min-height: 44px;
+}
+
+@media (max-width:420px) {
+  .soon-btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}

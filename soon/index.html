@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8"/>
+<script src="../theme-init.js"></script>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="noindex, follow" name="robots"/>
+<title>Tezliklə — CyberLab</title>
+<meta content="#0A0E13" name="theme-color"/>
+<link href="../favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<canvas aria-hidden="true" id="bgCanvas"></canvas>
+
+<header class="soon-top">
+  <a class="soon-brand" href="../">
+    <span aria-hidden="true" class="brand-mark">◈</span>
+    <span class="brand-text">CYBER<span class="accent-split">LAB</span></span>
+  </a>
+  <button aria-label="Tema dəyiş" class="theme-toggle" id="themeToggle" type="button">
+    <span class="toggle-track">
+      <span class="toggle-thumb"></span>
+      <span class="toggle-icon sun">☀</span>
+      <span class="toggle-icon moon">☾</span>
+    </span>
+  </button>
+  <!-- <div class="soon-lang" id="langBox">
+    <button aria-expanded="false" aria-haspopup="true" class="soon-lang-trigger" id="langTrigger" type="button">
+      <i aria-hidden="true" class="fa-solid fa-globe"></i>
+      <span id="langCode">AZ</span>
+    </button>
+    <div class="soon-lang-menu" id="langMenu" role="menu">
+      <button data-lang="az" role="menuitem" type="button">AZ · Azərbaycan</button>
+      <button data-lang="en" role="menuitem" type="button">EN · English</button>
+      <button data-lang="ru" role="menuitem" type="button">RU · Русский</button>
+      <button data-lang="tr" role="menuitem" type="button">TR · Türkçe</button>
+    </div>
+  </div> -->
+</header>
+
+<main class="soon-main">
+  <div class="soon-card">
+    <div class="soon-icon-wrap">
+      <div aria-hidden="true" class="soon-ring ring-1"></div>
+      <div aria-hidden="true" class="soon-ring ring-2"></div>
+      <div class="soon-icon" id="networkIcon"><i class="fa-solid fa-hourglass-half"></i></div>
+    </div>
+
+    <p class="soon-eyebrow" data-i18n="eyebrow">CYBERLAB · SOSİAL ŞƏBƏKƏ</p>
+    <h1 class="soon-title">
+      <span data-i18n="titleA">Tezliklə burdayıq</span>
+      <span class="soon-network" id="networkName">—</span>
+    </h1>
+    <p class="soon-desc" data-i18n="desc">
+      Bu hesab hazırda hazırlanır. Yeniliklərdən xəbərdar olmaq üçün bizimlə əlaqədə qalın —
+      açılan kimi burada canlı link görünəcək.
+    </p>
+
+    <div class="soon-status" id="statusLine">
+      <span aria-hidden="true" class="status-dot"></span>
+      <span class="status-text" id="statusText"></span><span aria-hidden="true" class="status-cursor">▍</span>
+    </div>
+
+    <div class="soon-actions">
+      <a class="soon-btn soon-btn-primary" href="../#top">
+        <i aria-hidden="true" class="fa-solid fa-arrow-left"></i>
+        <span data-i18n="back">Sayta qayıt</span>
+      </a>
+      <a class="soon-btn soon-btn-whatsapp" href="#" id="whatsappBtn" rel="noopener noreferrer" target="_blank">
+        <i aria-hidden="true" class="fa-brands fa-whatsapp"></i>
+        <span data-i18n="whatsapp">WhatsApp ilə yaz</span>
+      </a>
+    </div>
+
+    <div class="soon-other">
+      <p data-i18n="otherLabel">Digər şəbəkələrimiz:</p>
+      <div class="soon-other-icons" id="otherIcons"></div>
+    </div>
+  </div>
+</main>
+
+
+<footer class="soon-foot">
+  <span data-i18n="footNote">Təhsil məqsədli konseptual mənbə · icra oluna bilən hücum kodu daxil deyil.</span>
+</footer>
+
+<script src="../translations.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

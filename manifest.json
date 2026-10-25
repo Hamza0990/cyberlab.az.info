@@ -1,0 +1,32 @@
+{
+  "name": "CyberLab — Red Team & Blue Team Bələdçisi",
+  "short_name": "CyberLab",
+  "description": "OSINT, DDoS, RAT və fişinq hücum vektorlarını, Red Team/Blue Team alətlərini və qanuni kibertəhlükəsizlik təlim mühitlərini konseptual səviyyədə izah edən təhsil mənbəyi.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0A0E13",
+  "theme_color": "#0A0E13",
+  "lang": "az",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
