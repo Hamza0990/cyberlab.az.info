@@ -4,7 +4,9 @@
 ## Haqqında
 
 CYBERLAB — çoxdilli kibertəhlükəsizlik təhsil platformasıdır. Məqsəd hücumların necə işlədiyini konseptual izah etməklə müdafiə bacarıqlarını gücləndirməkdir. Sayt həm Red Team (hücum) həm də Blue Team (müdafiə) yanaşmalarını, kill chain diaqramını, tarixi hadisələri və qanuni təlim platformalarını təqdim edir.  
+
 ---
+
 
 ## Fayl strukturu
 
@@ -32,6 +34,7 @@ CYBERLAB — çoxdilli kibertəhlükəsizlik təhsil platformasıdır. Məqsəd 
   - `index.html` → struktur + SEO teqləri  
   - `style.css` → dizayn, animasiyalar, dark/light rejim  
   - `app.js` → interaktivlik, dil dəyişmə (i18n)  
+  - `translations.js` → tərcümələr  
 
 ---
 
