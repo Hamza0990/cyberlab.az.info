@@ -101,11 +101,11 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://va.vercel-scripts.com'],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://cdnjs.cloudflare.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com', 'data:'],
         imgSrc: ["'self'", 'data:'],
-        connectSrc: ["'self'"],
+        connectSrc: ["'self'", 'https://vitals.vercel-insights.com'],
         workerSrc: ["'self'"],            // Service Worker (offline rejim) üçün
         objectSrc: ["'none'"],            // Flash/plugin tamamilə bağlı
         baseUri: ["'self'"],            // <base> ilə yönləndirmə hücumu əleyhinə
